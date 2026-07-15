@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f5f4f0;
+  color: #2b251f;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: 'Lexend', system-ui, sans-serif;
+}
+
+@layer components {
+  /* Numeric cells: right-aligned, tabular, never wrap. */
+  .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid #dcd9cc;
+    border-radius: 1px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  .pill {
+    border-radius: 999px;
+    transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn {
+    border-radius: 10px;
+    transition: background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .field {
+    border-radius: 12px;
+  }
+
+  /* Data tables styled like the Excel model. */
+  .xl-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .xl-table th,
+  .xl-table td {
+    border: 1px solid #dcd9cc;
+    padding: 6px 10px;
+    white-space: nowrap;
+  }
+  .xl-table thead th {
+    background: #d9ead3;
+    border-color: #c9dcc0;
+    font-weight: 600;
+    color: #2b251f;
+  }
+  .xl-table tbody tr:nth-child(even) td {
+    background: #fbfaf6;
+  }
+  .xl-table tr.total-row td {
+    background: #eeede6;
+    font-weight: 700;
+  }
+  /* Selected scenario column highlight. */
+  .xl-table th.sel {
+    background: #b3c8ff;
+  }
+  .xl-table td.sel {
+    background: #e4efff;
+  }
+  .xl-table tr.total-row td.sel {
+    background: #cddcff;
+  }
+}
+
+/* Focus ring, Loyoly blue. */
+*:focus-visible {
+  outline: 2px solid #2965fe;
+  outline-offset: 1px;
+}
+
+/* Modal backdrop */
+.backdrop {
+  background: rgba(43, 37, 31, 0.45);
+}
