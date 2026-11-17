@@ -130,7 +130,11 @@ export function computePricing(
   settings: Settings
 ): Pricing {
   const { rev, aov } = inputs
-  const mOrders = ceil1000(rev / aov / 12)
+  // Monthly orders from revenue. Use the ACTUAL order count for the tier
+  // lookup — the plan tiers step in 500s at the low end (501/1001/1501…), so
+  // rounding up to the nearest 1000 (the old ceil1000) would push a value like
+  // 1300 into the 1501–2000 tier instead of its correct 1001–1500 tier.
+  const mOrders = Math.ceil(rev / aov / 12)
   const p1 = lookupPlan(mOrders)
   const p2 = lookupPlan(settings.manualOrders)
 
