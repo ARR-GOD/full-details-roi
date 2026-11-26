@@ -34,7 +34,7 @@ export function Glossary({ t, onClose }: { t: Dict; onClose: () => void }) {
         <div className="space-y-5 px-5 py-5">
           {t.glossarySections.map((s, i) => (
             <section key={i}>
-              <h3 className="mb-1 font-display text-[14px] font-semibold text-accent">
+              <h3 className="mb-1 font-display text-[14px] font-semibold text-accent-text">
                 {s.title}
               </h3>
               <p className="text-[13.5px] leading-relaxed text-muted">{s.body}</p>

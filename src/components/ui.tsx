@@ -55,7 +55,7 @@ export function TogglePill({
       onClick={onToggle}
       className={`pill inline-flex items-center gap-1.5 border px-3 py-1 text-[13px] font-medium ${
         on
-          ? 'border-accent bg-accent-softer text-accent'
+          ? 'border-accent bg-accent-softer text-accent-text'
           : 'border-border bg-white text-muted2 hover:bg-canvas'
       }`}
     >
@@ -89,7 +89,7 @@ export function GroupToggle({
     <button
       onClick={onToggle}
       aria-expanded={open}
-      className="btn inline-flex items-center gap-2 text-[15px] font-semibold text-ink hover:text-accent"
+      className="btn inline-flex items-center gap-2 text-[15px] font-semibold text-ink hover:text-accent-text"
     >
       <span
         aria-hidden

@@ -1,5 +1,6 @@
 import { Logo } from '../assets/Logo'
 import { Segmented } from './ui'
+import { SKIN } from '../skin'
 import type { Lang } from '../model/format'
 import type { Mode } from '../state/storage'
 import type { Dict } from '../i18n'
@@ -24,26 +25,30 @@ export function TopBar({
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-canvas/90 backdrop-blur">
       <div className="mx-auto flex max-w-[1840px] flex-wrap items-center gap-3 px-[5%] py-3">
-        <Logo />
-        <span className="hidden font-display text-[15px] font-medium text-muted sm:inline">
-          {t.appTitle}
-        </span>
+        {SKIN !== 'partner' && <Logo />}
+        {SKIN !== 'partner' && (
+          <span className="hidden font-display text-[15px] font-medium text-muted sm:inline">
+            {t.appTitle}
+          </span>
+        )}
 
         <span className="pill ml-1 border border-border bg-white px-3 py-1 text-[13px] font-medium text-ink">
           {clientName}
         </span>
 
         <div className="ml-auto flex flex-wrap items-center gap-2">
-          <Segmented
-            ariaLabel="Language"
-            value={lang}
-            onChange={(v) => onLang(v as Lang)}
-            options={[
-              { value: 'fr', label: 'FR' },
-              { value: 'en', label: 'EN' },
-              { value: 'es', label: 'ES' },
-            ]}
-          />
+          {SKIN !== 'partner' && (
+            <Segmented
+              ariaLabel="Language"
+              value={lang}
+              onChange={(v) => onLang(v as Lang)}
+              options={[
+                { value: 'fr', label: 'FR' },
+                { value: 'en', label: 'EN' },
+                { value: 'es', label: 'ES' },
+              ]}
+            />
+          )}
           <Segmented
             ariaLabel="Mode"
             value={mode}
@@ -55,7 +60,7 @@ export function TopBar({
           />
           <button
             onClick={onOpenGlossary}
-            className="btn rounded-btn bg-accent px-3.5 py-1.5 text-[13px] font-semibold text-white hover:bg-accent-hover"
+            className="btn rounded-btn bg-accent px-3.5 py-1.5 text-[13px] font-semibold text-onaccent hover:bg-accent-hover"
           >
             {t.glossary}
           </button>

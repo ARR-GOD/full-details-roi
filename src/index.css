@@ -2,8 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ---------------------------------------------------------------------------
+ * Skins. One component tree, two variable sets, picked by `data-skin` on
+ * <html> (set at build time from VITE_AUDIENCE — see index.html and .env).
+ * Never add a skin-specific class to a component: add the token here.
+ * ------------------------------------------------------------------------ */
+
+:root,
+[data-skin='internal'] {
   color-scheme: light;
+
+  --canvas: #f5f4f0;
+  --ink: #2b251f;
+  --muted: #52473c;
+  --muted2: #776a58;
+  --muted3: #9e8e71;
+
+  --accent: #2965fe;
+  --accent-hover: #1f52d8;
+  --accent-soft: #b3c8ff;
+  --accent-softer: #e4efff;
+  --accent-text: #2965fe;
+  --onaccent: #ffffff;
+
+  --green-band: #d9ead3;
+  --green-border: #c9dcc0;
+
+  --input-bg: #fff2cc;
+  --highlight: #fec229;
+  --highlight-soft: #ffe57e;
+  --zebra: #fbfaf6;
+  --total: #eeede6;
+  --total-sel: #cddcff;
+  --panel: #2b251f;
+
+  --border: #dcd9cc;
+  --border-subtle: #eeede6;
+  --border-strong: #c6c0ab;
+
+  --font-display: 'Lexend';
+  --font-body: 'Inter';
+
+  --radius-card: 1px;
+  --radius-btn: 10px;
+  --radius-field: 12px;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.06);
+
+  --focus-color: #2965fe;
+  --scrim: rgba(43, 37, 31, 0.45);
+}
+
+[data-skin='partner'] {
+  color-scheme: light;
+
+  /* Hub tokens (.interface-design/system.md, section "Hub partenaire") */
+  --canvas: #e9eaee;
+  --ink: #0a0a0c;
+  --muted: #43444c;
+  --muted2: #6b6c74;
+  --muted3: #9c9da6;
+
+  /* The hub's one accent is mint — fills, borders, tints, focus only.
+     Never as text on a light background (see accent-text / onaccent). */
+  --accent: #14f0c8;
+  --accent-hover: #0fd1ad;
+  --accent-soft: #cffbf2;
+  --accent-softer: #e8fdf9;
+  --accent-text: #0a0a0c;
+  --onaccent: #0a0a0c;
+
+  --green-band: #ecedf1;
+  --green-border: #d7d9de;
+
+  --input-bg: #ffffff;
+  --highlight: #14f0c8;
+  --highlight-soft: #cffbf2;
+  --zebra: #f5f6f8;
+  --total: #ecedf1;
+  --total-sel: #bef2e7;
+  --panel: #0a0a0c;
+
+  --border: #e5e7eb;
+  --border-subtle: #f0f1f4;
+  --border-strong: #d1d3d9;
+
+  --font-display: 'Inter';
+  --font-body: 'Inter';
+
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --radius-field: 12px;
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.05);
+
+  --focus-color: #14f0c8;
+  --scrim: rgba(10, 10, 12, 0.45);
 }
 
 html,
@@ -14,9 +106,9 @@ body,
 
 body {
   margin: 0;
-  background: #f5f4f0;
-  color: #2b251f;
-  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -25,7 +117,7 @@ h1,
 h2,
 h3,
 .font-display {
-  font-family: 'Lexend', system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
 }
 
 @layer components {
@@ -38,9 +130,9 @@ h3,
 
   .card {
     background: #ffffff;
-    border: 1px solid #dcd9cc;
-    border-radius: 1px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
   }
 
   .pill {
@@ -50,16 +142,17 @@ h3,
   }
 
   .btn {
-    border-radius: 10px;
+    border-radius: var(--radius-btn);
     transition: background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
       color 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .field {
-    border-radius: 12px;
+    border-radius: var(--radius-field);
   }
 
-  /* Data tables styled like the Excel model. */
+  /* Data tables styled like the Excel model (internal) / like the hub's
+     neutral tables (partner) — same markup, different variables. */
   .xl-table {
     width: 100%;
     border-collapse: collapse;
@@ -67,42 +160,42 @@ h3,
   }
   .xl-table th,
   .xl-table td {
-    border: 1px solid #dcd9cc;
+    border: 1px solid var(--border);
     padding: 6px 10px;
     white-space: nowrap;
   }
   .xl-table thead th {
-    background: #d9ead3;
-    border-color: #c9dcc0;
+    background: var(--green-band);
+    border-color: var(--green-border);
     font-weight: 600;
-    color: #2b251f;
+    color: var(--ink);
   }
   .xl-table tbody tr:nth-child(even) td {
-    background: #fbfaf6;
+    background: var(--zebra);
   }
   .xl-table tr.total-row td {
-    background: #eeede6;
+    background: var(--total);
     font-weight: 700;
   }
   /* Selected scenario column highlight. */
   .xl-table th.sel {
-    background: #b3c8ff;
+    background: var(--accent-soft);
   }
   .xl-table td.sel {
-    background: #e4efff;
+    background: var(--accent-softer);
   }
   .xl-table tr.total-row td.sel {
-    background: #cddcff;
+    background: var(--total-sel);
   }
 }
 
-/* Focus ring, Loyoly blue. */
+/* Focus ring. */
 *:focus-visible {
-  outline: 2px solid #2965fe;
+  outline: 2px solid var(--focus-color);
   outline-offset: 1px;
 }
 
 /* Modal backdrop */
 .backdrop {
-  background: rgba(43, 37, 31, 0.45);
+  background: var(--scrim);
 }

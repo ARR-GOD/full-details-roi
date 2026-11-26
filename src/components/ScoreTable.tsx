@@ -56,7 +56,7 @@ export function ScoreTable({
           <tr className="total-row">
             <td className="text-left">{t.scoreFitTable}</td>
             <td className="num" />
-            <td className="num text-accent">{fmtPercent(model.score.scoreFit, lang, 2)}</td>
+            <td className="num text-accent-text">{fmtPercent(model.score.scoreFit, lang, 2)}</td>
           </tr>
         </tbody>
       </table>

@@ -27,7 +27,7 @@ export function ScenarioCard({
           {t.mostProbable}
         </span>
         {internal && (
-          <span className="pill bg-accent px-2.5 py-1 text-[12px] font-semibold text-white">
+          <span className="pill bg-accent px-2.5 py-1 text-[12px] font-semibold text-onaccent">
             {t.scoreFit} {fmtPercent(model.score.scoreFit, lang, 1)}
           </span>
         )}

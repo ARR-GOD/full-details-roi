@@ -27,7 +27,7 @@ export function InputsCard({
           <span>{t.inputs}</span>
           <button
             onClick={onReset}
-            className="btn rounded-btn bg-white/70 px-2 py-0.5 text-[12px] font-medium text-muted2 hover:text-accent"
+            className="btn rounded-btn bg-white/70 px-2 py-0.5 text-[12px] font-medium text-muted2 hover:text-accent-text"
           >
             {t.reset}
           </button>
