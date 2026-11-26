@@ -92,3 +92,62 @@ the app didn't write are never touched.
 Static bundle — deployable to any static host. A `vercel.json` (framework: `vite`,
 output: `dist`) is included, so on Vercel it's *New Project → import the repo →
 Deploy* with zero extra configuration.
+
+## Two skins, one repo, one branch (internal sales tool + Partner Radar)
+
+This same codebase builds **two different-looking tools** from the exact same
+model and formulas — picked at build time by the `VITE_AUDIENCE` env var
+(`internal` or `partner`, default `internal` — see `.env`), via `src/skin.ts`
+and the `data-skin` attribute it sets on `<html>` (`index.html`, `%VITE_AUDIENCE%`
+is substituted by Vite at build time).
+
+- **Internal** (`VITE_AUDIENCE=internal`, unset = same thing): the original tool
+  above, unchanged — Loyoly logo, FR/EN/ES picker, "Joe — 2026" demo client.
+- **Partner** (`VITE_AUDIENCE=partner`): the version embedded in **Partner
+  Radar's partner hub** (an agency shows ROI to their own client, the brand).
+  No Loyoly logo (the hub already has its own), no language picker (locked to
+  French, since the hub carries no language context into the iframe), no demo
+  client name (starts blank so the agency types their client's name). Visually
+  it uses Partner Radar's hub design tokens (neutral grays, single mint accent,
+  Inter only — see `partner-radar/.interface-design/system.md`) instead of the
+  internal Excel-style palette. Colors live as CSS variables in `src/index.css`
+  under `[data-skin="partner"]` — **never** add a skin-specific class to a
+  component, add the token there instead (see `text-accent-text` / `text-onaccent`
+  for why: the partner skin's accent is a light mint, unsafe as text on a light
+  background, unlike the internal skin's blue).
+
+**Why this matters for how you work on this repo:** both deployments point at
+**this same branch**. A fix to `src/model/` (a formula, `PLAN_TIERS`,
+`WALLET_TIERS`, anything in "How to change things" above) ships to both tools
+on their next deploy, automatically, with no extra step — that's the entire
+point of keeping this as one codebase instead of two. **Never** branch the
+partner skin off into its own long-lived branch or fork: if you do, it stops
+receiving fixes made here, silently.
+
+**Partner-specific constraints to keep in mind editing this app:**
+- Partner Radar embeds this app in an `<iframe>` (cross-origin — it does not
+  share `localStorage`, cookies, or a JS window with the host page). Don't add
+  anything that assumes it can read the parent page's state directly; cross-
+  frame communication, if ever needed (e.g. to sync dark mode), goes through
+  `postMessage`, not direct DOM access like `sim-pnl.html` does on its
+  same-origin host.
+- The agency viewing it is **not** a Loyoly employee — `internal` mode exists
+  for them too (to tune assumptions before presenting), but never add a string,
+  a field, or a number here that assumes the viewer works at Loyoly, or that
+  would leak internal-only context (deal history, CRM status, etc.) — there is
+  none of that today; keep it that way.
+- `clientName` defaults to the partner's own end client, never the Loyoly demo
+  name — see `DEFAULT_SETTINGS.clientName` in `src/model/defaults.ts`.
+
+**Deploy (two Vercel projects, same repo, same branch):**
+
+| | Internal (today) | Partner (new) |
+|---|---|---|
+| Vercel project | existing, `full-details-roi.vercel.app` | new, under Antoine's Vercel account |
+| Branch | this repo's default branch | same |
+| `VITE_AUDIENCE` | `internal` (or unset) | `partner` |
+| `VITE_APP_TITLE` | `Loyoly — Pricing & ROI` (or unset) | `Calculateur ROI` |
+
+Setting up the second project: *Vercel → New Project → import this same repo →
+Environment Variables → add the two partner values above → Deploy*. No other
+setting differs.
