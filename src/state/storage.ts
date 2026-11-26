@@ -3,6 +3,7 @@ import { INTEGRATIONS } from '../model/constants'
 import type { Inputs, Integrations, Settings } from '../model/types'
 import type { Lang } from '../model/format'
 import { LANGS } from '../i18n'
+import { SKIN } from '../skin'
 
 export type Mode = 'internal' | 'presentation'
 export type GroupKey = 'scenarioDetails' | 'totals' | 'pricingScore'
@@ -76,7 +77,13 @@ export function loadState(): PersistedState {
       if (isNum(s.manualPasses)) base.settings.manualPasses = s.manualPasses
       if (isBool(s.showAnnex)) base.settings.showAnnex = s.showAnnex
     }
-    if (typeof parsed.lang === 'string' && (LANGS as string[]).includes(parsed.lang))
+    // The partner skin has no language picker — always French, regardless of
+    // what an earlier internal-skin session may have stored on this browser.
+    if (
+      SKIN !== 'partner' &&
+      typeof parsed.lang === 'string' &&
+      (LANGS as string[]).includes(parsed.lang)
+    )
       base.lang = parsed.lang as Lang
     if (parsed.mode === 'internal' || parsed.mode === 'presentation') base.mode = parsed.mode
     if (parsed.groups && typeof parsed.groups === 'object') {

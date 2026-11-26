@@ -36,14 +36,14 @@ export function AnnexTable({
             <td className="num">{cur2(a.axAovAll)}</td>
             <td className="num">{cur2(a.axAovScen)}</td>
             <td className="num">{cur2(a.axMin)}</td>
-            <td className="num text-accent">{pct(a.axIncr1)}</td>
+            <td className="num text-accent-text">{pct(a.axIncr1)}</td>
           </tr>
           <tr>
             <td className="text-left text-muted">{t.annexRep}</td>
             <td className="num">{n2(a.axRepAll)}</td>
             <td className="num">{n2(a.axRepScen)}</td>
             <td className="num">{n2(a.axExpiry)}</td>
-            <td className="num text-accent">{pct(a.axIncr2)}</td>
+            <td className="num text-accent-text">{pct(a.axIncr2)}</td>
           </tr>
         </tbody>
       </table>

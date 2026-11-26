@@ -1,4 +1,5 @@
 import type { Integrations, Inputs, Settings } from './types'
+import { SKIN } from '../skin'
 
 /** Default inputs from the "Joe — 2026" tab. */
 export const DEFAULT_INPUTS: Inputs = {
@@ -25,7 +26,9 @@ export const DEFAULT_INTEGRATIONS: Integrations = {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  clientName: 'Joe — 2026',
+  // "Joe — 2026" is the internal demo client from the Excel model; the
+  // partner tool starts blank so an agency types their own client's name.
+  clientName: SKIN === 'partner' ? '' : 'Joe — 2026',
   plan: 'Premium',
   manualOrders: 50000,
   manualPasses: 2000,
